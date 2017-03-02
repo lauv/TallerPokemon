@@ -7,6 +7,10 @@ class PokemonsController < ApplicationController
     @pokemons = Pokemon.all
   end
 
+  def home
+    
+  end
+
   # GET /pokemons/1
   # GET /pokemons/1.json
   def show
@@ -62,6 +66,10 @@ class PokemonsController < ApplicationController
   end
 
   private
+  def filter_admin!
+    authenticate_user!
+    redirect_to root_path, alert: "No tienes acceso" unless current_user.admin?
+  end
     # Use callbacks to share common setup or constraints between actions.
     def set_pokemon
       @pokemon = Pokemon.find(params[:id])
